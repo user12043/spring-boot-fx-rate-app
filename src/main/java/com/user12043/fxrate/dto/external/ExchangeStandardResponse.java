@@ -1,4 +1,4 @@
-package com.user12043.fxrate.dto;
+package com.user12043.fxrate.dto.external;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
