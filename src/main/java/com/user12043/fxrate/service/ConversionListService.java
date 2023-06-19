@@ -2,7 +2,7 @@ package com.user12043.fxrate.service;
 
 import com.github.f4b6a3.ulid.Ulid;
 import com.user12043.fxrate.dto.ConversionResponse;
-import com.user12043.fxrate.model.Transaction;
+import com.user12043.fxrate.model.ConversionTransaction;
 import com.user12043.fxrate.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +31,7 @@ public class ConversionListService {
     @Transactional(readOnly = true)
     public ConversionResponse findById(String transactionId) {
         try {
-            final Optional<Transaction> transactionOptional = transactionRepository.findById(Ulid.from(transactionId).toBytes());
+            final Optional<ConversionTransaction> transactionOptional = transactionRepository.findById(Ulid.from(transactionId).toBytes());
             return transactionOptional.map(ConversionResponse::fromTransaction).orElse(null);
         } catch (IllegalArgumentException e) {
             // Catch exception when invalid ULID string provided

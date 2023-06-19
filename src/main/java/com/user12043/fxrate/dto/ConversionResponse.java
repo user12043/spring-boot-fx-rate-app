@@ -2,7 +2,7 @@ package com.user12043.fxrate.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.f4b6a3.ulid.Ulid;
-import com.user12043.fxrate.model.Transaction;
+import com.user12043.fxrate.model.ConversionTransaction;
 
 import java.time.LocalDateTime;
 
@@ -14,19 +14,19 @@ public record ConversionResponse(
         double amount,
         double result
 ) {
-    public static ConversionResponse fromTransaction(Transaction transaction) {
+    public static ConversionResponse fromTransaction(ConversionTransaction conversionTransaction) {
         return new ConversionResponse(
-                Ulid.from(transaction.getId()).toString(),
-                transaction.getDate(),
-                transaction.getBaseCurrency(),
-                transaction.getTargetCurrency(),
-                transaction.getAmount(),
-                transaction.getResult()
+                Ulid.from(conversionTransaction.getId()).toString(),
+                conversionTransaction.getDate(),
+                conversionTransaction.getBaseCurrency(),
+                conversionTransaction.getTargetCurrency(),
+                conversionTransaction.getAmount(),
+                conversionTransaction.getResult()
         );
     }
 
-    public static Transaction toTransaction(ConversionResponse dto) {
-        return new Transaction(
+    public static ConversionTransaction toTransaction(ConversionResponse dto) {
+        return new ConversionTransaction(
                 Ulid.from(dto.id).toBytes(),
                 dto.date,
                 dto.baseCurrency,

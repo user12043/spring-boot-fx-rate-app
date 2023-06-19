@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
-public class Transaction {
+public class ConversionTransaction {
     @Id
     private byte[] id; // ULID
 
@@ -26,7 +26,7 @@ public class Transaction {
     @Column
     private double result;
 
-    public Transaction(byte[] id, LocalDateTime date, String baseCurrency, String targetCurrency, double amount, double result) {
+    public ConversionTransaction(byte[] id, LocalDateTime date, String baseCurrency, String targetCurrency, double amount, double result) {
         this.id = id;
         this.date = date;
         this.baseCurrency = baseCurrency;
@@ -35,7 +35,7 @@ public class Transaction {
         this.result = result;
     }
 
-    public Transaction() {
+    public ConversionTransaction() {
     }
 
     public byte[] getId() {
