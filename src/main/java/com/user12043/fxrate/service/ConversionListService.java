@@ -5,6 +5,7 @@ import com.user12043.fxrate.dto.ConversionResponse;
 import com.user12043.fxrate.model.Transaction;
 import com.user12043.fxrate.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -20,12 +21,14 @@ public class ConversionListService {
         this.transactionRepository = transactionRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<ConversionResponse> findAllByDate(Long start, Long end) {
         final LocalDateTime startDate = LocalDateTime.ofInstant(new Date(start).toInstant(), ZoneOffset.UTC);
         final LocalDateTime endDate = LocalDateTime.ofInstant(new Date(end).toInstant(), ZoneOffset.UTC);
         return transactionRepository.findByDateBetween(startDate, endDate).stream().parallel().map(ConversionResponse::fromTransaction).toList();
     }
 
+    @Transactional(readOnly = true)
     public ConversionResponse findById(String transactionId) {
         try {
             final Optional<Transaction> transactionOptional = transactionRepository.findById(Ulid.from(transactionId).toBytes());

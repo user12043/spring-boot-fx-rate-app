@@ -5,8 +5,8 @@ import com.user12043.fxrate.dto.ConversionResponse;
 import com.user12043.fxrate.dto.external.ExchangeConvertResponse;
 import com.user12043.fxrate.repository.TransactionRepository;
 import com.user12043.fxrate.util.TransactionUtil;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
