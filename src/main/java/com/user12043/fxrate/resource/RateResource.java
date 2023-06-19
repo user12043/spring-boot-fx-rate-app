@@ -19,8 +19,8 @@ public class RateResource {
     }
 
     @GetMapping("/{baseCurrency}/{targetCurrency}")
-    public Response getRate(@PathVariable("baseCurrency") String baseCurrency,
-                            @PathVariable("targetCurrency") String targetCurrency) {
+    public Response getRate(@PathVariable String baseCurrency,
+                            @PathVariable String targetCurrency) {
         final RateResponse response = rateService.getRate(baseCurrency, targetCurrency);
         return Response.ok().entity(response).build();
     }

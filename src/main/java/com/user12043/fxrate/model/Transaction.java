@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class Transaction {
@@ -12,7 +12,7 @@ public class Transaction {
     private byte[] id; // ULID
 
     @Column
-    private Date date;
+    private LocalDateTime date;
 
     @Column(name = "base_currency")
     private String baseCurrency;
@@ -26,7 +26,7 @@ public class Transaction {
     @Column
     private double result;
 
-    public Transaction(byte[] id, Date date, String baseCurrency, String targetCurrency, double amount, double result) {
+    public Transaction(byte[] id, LocalDateTime date, String baseCurrency, String targetCurrency, double amount, double result) {
         this.id = id;
         this.date = date;
         this.baseCurrency = baseCurrency;
@@ -46,11 +46,11 @@ public class Transaction {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

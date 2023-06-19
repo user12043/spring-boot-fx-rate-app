@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.f4b6a3.ulid.Ulid;
 import com.user12043.fxrate.model.Transaction;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 public record ConversionResponse(
         String id,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd-HH:mm:ss") Date date,
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime date,
         String baseCurrency,
         String targetCurrency,
         double amount,
