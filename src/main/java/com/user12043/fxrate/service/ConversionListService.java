@@ -30,12 +30,7 @@ public class ConversionListService {
 
     @Transactional(readOnly = true)
     public ConversionResponse findById(String transactionId) {
-        try {
-            final Optional<ConversionTransaction> transactionOptional = transactionRepository.findById(Ulid.from(transactionId).toBytes());
-            return transactionOptional.map(ConversionResponse::fromTransaction).orElse(null);
-        } catch (IllegalArgumentException e) {
-            // Catch exception when invalid ULID string provided
-            return null;
-        }
+        final Optional<ConversionTransaction> transactionOptional = transactionRepository.findById(Ulid.from(transactionId).toBytes());
+        return transactionOptional.map(ConversionResponse::fromTransaction).orElseThrow();
     }
 }
