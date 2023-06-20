@@ -30,4 +30,9 @@ public class ConversionListResource {
         ConversionResponse response = conversionListService.findById(transactionId);
         return Response.ok(response).build();
     }
+
+    @GetMapping
+    public Response findRecent() {
+        return Response.ok(conversionListService.findRecent()).build();
+    }
 }

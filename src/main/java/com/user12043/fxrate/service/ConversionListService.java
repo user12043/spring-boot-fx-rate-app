@@ -4,9 +4,11 @@ import com.github.f4b6a3.ulid.Ulid;
 import com.user12043.fxrate.dto.ConversionResponse;
 import com.user12043.fxrate.model.ConversionTransaction;
 import com.user12043.fxrate.repository.TransactionRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
@@ -22,6 +24,7 @@ public class ConversionListService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable("listByDateCache")
     public List<ConversionResponse> findAllByDate(Long start, Long end) {
         final LocalDateTime startDate = LocalDateTime.ofInstant(new Date(start).toInstant(), ZoneOffset.UTC);
         final LocalDateTime endDate = LocalDateTime.ofInstant(new Date(end).toInstant(), ZoneOffset.UTC);
@@ -29,8 +32,14 @@ public class ConversionListService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable("listByIdCache")
     public ConversionResponse findById(String transactionId) {
         final Optional<ConversionTransaction> transactionOptional = transactionRepository.findById(Ulid.from(transactionId).toBytes());
         return transactionOptional.map(ConversionResponse::fromTransaction).orElseThrow();
+    }
+
+    @Transactional(readOnly = true)
+    public List<ConversionResponse> findRecent() {
+        return this.findAllByDate(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli() - Duration.ofMinutes(5).toMillis(), LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
     }
 }

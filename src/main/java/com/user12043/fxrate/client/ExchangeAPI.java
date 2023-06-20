@@ -3,6 +3,7 @@ package com.user12043.fxrate.client;
 import com.user12043.fxrate.dto.external.ExchangeConvertResponse;
 import com.user12043.fxrate.dto.external.ExchangePairResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
@@ -15,12 +16,14 @@ public class ExchangeAPI {
     @Value("${exchange.api.basePath}")
     private String exchangeApiPath;
 
+    @Cacheable(value = "rateResponseCache")
     public ExchangePairResponse fetchRateFromRemote(String baseCurrency, String targetCurrency) throws HttpClientErrorException {
         final ResponseEntity<ExchangePairResponse> responseEntity = template.getForEntity(
                 "%s/pair/%s/%s".formatted(exchangeApiPath, baseCurrency, targetCurrency), ExchangePairResponse.class);
         return responseEntity.getBody();
     }
 
+    @Cacheable("conversionResponseCache")
     public ExchangeConvertResponse fetchConversionFromRemote(String baseCurrency, String targetCurrency, double amount) throws HttpClientErrorException {
         final ResponseEntity<ExchangeConvertResponse> responseEntity = template.getForEntity(
                 "%s/pair/%s/%s/%f".formatted(exchangeApiPath, baseCurrency, targetCurrency, amount), ExchangeConvertResponse.class);
