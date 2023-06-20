@@ -30,7 +30,7 @@ public class ExchangeAPI {
      * @return Exchange rate
      * @throws HttpClientErrorException When there is a problem with connection to exchangerate-api.com
      */
-    @Cacheable(value = "rateResponseCache")
+    @Cacheable(value = "rateResponseCache") // TODO: set a TTL for cache
     public ExchangePairResponse fetchRateFromRemote(String baseCurrency, String targetCurrency) throws HttpClientErrorException {
         final ResponseEntity<ExchangePairResponse> responseEntity = template.getForEntity(
                 "%s/pair/%s/%s".formatted(exchangeApiPath, baseCurrency, targetCurrency), ExchangePairResponse.class);
@@ -46,7 +46,7 @@ public class ExchangeAPI {
      * @return The corresponding amount of target currency in given base currency
      * @throws HttpClientErrorException When there is a problem with connection to exchangerate-api.com
      */
-    @Cacheable("conversionResponseCache")
+    @Cacheable("conversionResponseCache") // TODO: set a TTL for cache
     public ExchangeConvertResponse fetchConversionFromRemote(String baseCurrency, String targetCurrency, double amount) throws HttpClientErrorException {
         final ResponseEntity<ExchangeConvertResponse> responseEntity = template.getForEntity(
                 "%s/pair/%s/%s/%f".formatted(exchangeApiPath, baseCurrency, targetCurrency, amount), ExchangeConvertResponse.class);

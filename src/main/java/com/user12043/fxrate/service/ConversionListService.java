@@ -27,7 +27,7 @@ public class ConversionListService {
     }
 
     @Transactional(readOnly = true)
-    @Cacheable("listByDateCache")
+    @Cacheable("listByDateCache") // TODO: set a TTL for cache
     public List<ConversionResponse> findAllByDate(Long start, Long end) {
         final LocalDateTime startDate = LocalDateTime.ofInstant(new Date(start).toInstant(), ZoneOffset.UTC);
         final LocalDateTime endDate = LocalDateTime.ofInstant(new Date(end).toInstant(), ZoneOffset.UTC);
@@ -35,7 +35,7 @@ public class ConversionListService {
     }
 
     @Transactional(readOnly = true)
-    @Cacheable("listByIdCache")
+    @Cacheable("listByIdCache") // TODO: set a TTL for cache
     public ConversionResponse findById(String transactionId) {
         final Optional<ConversionTransaction> transactionOptional = transactionRepository.findById(Ulid.from(transactionId).toBytes());
         return transactionOptional.map(ConversionResponse::fromTransaction).orElseThrow();
