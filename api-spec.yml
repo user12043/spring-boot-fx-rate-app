@@ -1,0 +1,120 @@
+openapi: 3.0.0
+info:
+  description: "Simple foreign exchange application"
+  version: 0.0.1-SNAPSHOT
+  title: fxRate
+  contact:
+    email: mail@mail.io
+tags:
+  - name: rate
+    description: Exchange Rate API
+    externalDocs:
+      description: Find out more
+      url: https://gitlab.com/user12043/spring-boot-fx-rate-app
+  - name: convert
+    description: Conversion API
+  - name: list
+    description: Conversion List API
+paths:
+  /rate/{baseCurrency}/{targetCurrency}:
+    get:
+      tags:
+        - rate
+      summary: Get exchange rate
+      description: "Get exchange rate for given currency pair"
+      operationId: rate
+      parameters:
+        - name: baseCurrency
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: targetCurrency
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        #$ref: "#/components/requestBodies/Pet"
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Invalid input
+  /convert/{baseCurrency}/{targetCurrency}/{amount}:
+    get:
+      tags:
+        - convert
+      summary: Convert currencies
+      description: Convert given currency pair by specified amount
+      operationId: convert
+      parameters:
+        - name: baseCurrency
+          in: path
+          required: true
+          schema:
+           type: string
+        - name: targetCurrency
+          in: path
+          required: true
+          schema:
+           type: string
+        - name: amount
+          in: path
+          required: true
+          schema:
+           type: number
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Invalid input
+  /list/{start}/{end}:
+    get:
+      tags:
+        - list
+      summary: List transaction history
+      description: Get list of transactions
+      operationId: list
+      parameters:
+        - name: start
+          in: path
+          required: true
+          description: Start date in unix epoch milliseconds format
+          schema:
+           type: number
+        - name: end
+          in: path
+          required: true
+          description: End date in unix epoch milliseconds format
+          schema:
+           type: number
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Invalid input
+  /list/{transactionId}:
+    get:
+      tags:
+        - list
+      summary: List transaction history
+      description: Get list of transactions
+      operationId: list-id
+      parameters:
+        - name: transactionId
+          in: path
+          required: true
+          description: Start date in unix epoch milliseconds format
+          schema:
+           type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Invalid input
+externalDocs:
+  description: Find out more about fxRate
+  url: https://gitlab.com/user12043/spring-boot-fx-rate-app
+servers:
+  - url: http://localhost:9000
