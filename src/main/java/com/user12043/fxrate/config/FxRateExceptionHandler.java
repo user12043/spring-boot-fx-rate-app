@@ -14,8 +14,21 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.NoSuchElementException;
 
+/**
+ * Configures global error handling mechanism for the endpoints
+ * by @{@link ControllerAdvice}
+ */
 @ControllerAdvice
 public class FxRateExceptionHandler extends ResponseEntityExceptionHandler {
+
+    /**
+     * Generic handle method includes common call
+     *
+     * @param exception Exception thrown by the service
+     * @param request   Corresponding web request
+     * @param errorCode Custom error code given for the case
+     * @return Final response for the exception
+     */
     private ResponseEntity<?> handle(RuntimeException exception, WebRequest request, ErrorCode errorCode) {
         return handleExceptionInternal(
                 exception,
@@ -25,16 +38,37 @@ public class FxRateExceptionHandler extends ResponseEntityExceptionHandler {
                 request);
     }
 
+    /**
+     * Handles the case when there is no data found for given parameters
+     *
+     * @param exception Exception thrown by the service
+     * @param request   Corresponding web request
+     * @return Final response for the exception
+     */
     @ExceptionHandler(value = {EmptyResultDataAccessException.class, NoSuchElementException.class})
     public ResponseEntity<?> handleNoData(RuntimeException exception, WebRequest request) {
         return handle(exception, request, ErrorCode.NO_DATA);
     }
 
+    /**
+     * Handles the case when invalid parameters supplied for any service
+     *
+     * @param exception Exception thrown by the service
+     * @param request   Corresponding web request
+     * @return Final response for the exception
+     */
     @ExceptionHandler(value = {IllegalArgumentException.class, MethodArgumentTypeMismatchException.class})
     public ResponseEntity<?> handleIllegalArgument(RuntimeException exception, WebRequest request) {
         return handle(exception, request, ErrorCode.INVALID_INPUT);
     }
 
+    /**
+     * Handles any case which couldn't been handled by other handlers
+     *
+     * @param exception Exception thrown by the service
+     * @param request   Corresponding web request
+     * @return Final response for the exception
+     */
     @ExceptionHandler
     public ResponseEntity<?> handleDefault(RuntimeException exception, WebRequest request) {
         return handle(exception, request, ErrorCode.UNEXPECTED);

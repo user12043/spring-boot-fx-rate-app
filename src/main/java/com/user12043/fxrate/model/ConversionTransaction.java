@@ -6,10 +6,13 @@ import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
 
+/**
+ * The JPA entity object of Transaction information to store in the database
+ */
 @Entity
 public class ConversionTransaction {
     @Id
-    private byte[] id; // ULID
+    private byte[] id; // ULID as byte array (not String since byte array takes less space)
 
     @Column
     private LocalDateTime date;

@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+/**
+ * Service of conversion API
+ */
 @Service
 public class ConversionService {
     private final ExchangeAPI exchangeAPI;

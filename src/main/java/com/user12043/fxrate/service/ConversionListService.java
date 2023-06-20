@@ -15,6 +15,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service of conversion list API
+ */
 @Service
 public class ConversionListService {
     private final TransactionRepository transactionRepository;

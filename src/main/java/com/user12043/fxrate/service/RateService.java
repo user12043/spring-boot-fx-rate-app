@@ -5,6 +5,9 @@ import com.user12043.fxrate.dto.RateResponse;
 import com.user12043.fxrate.dto.external.ExchangePairResponse;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service of exchange rate API
+ */
 @Service
 public class RateService {
     private final ExchangeAPI exchangeAPI;

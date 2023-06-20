@@ -9,9 +9,18 @@ import javax.cache.CacheManager;
 import javax.cache.Caching;
 import javax.cache.spi.CachingProvider;
 
+/**
+ * Initializes Cache Manager for some services (Marked with @{@link org.springframework.cache.annotation.Cacheable})
+ */
 @Configuration
 @EnableCaching
 public class CacheConfig {
+
+    /**
+     * Configure EHCACHE library to use
+     *
+     * @return EHCACHE manager
+     */
     @Bean
     public CacheManager ehCacheManager() {
         final CachingProvider cachingProvider = Caching.getCachingProvider();

@@ -4,6 +4,10 @@ import org.springframework.http.HttpStatus;
 
 import java.util.HashMap;
 
+/**
+ * Global error information class for global error handling
+ * Includes error codes and messages for defined cases
+ */
 public class FxRateExceptionUtil extends HashMap<FxRateExceptionUtil.ErrorCode, FxRateExceptionUtil.ErrorInfo> {
     private static final FxRateExceptionUtil INSTANCE = new FxRateExceptionUtil();
 
