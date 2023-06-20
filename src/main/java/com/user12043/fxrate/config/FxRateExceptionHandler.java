@@ -32,7 +32,7 @@ public class FxRateExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity<?> handle(RuntimeException exception, WebRequest request, ErrorCode errorCode) {
         return handleExceptionInternal(
                 exception,
-                new FxRateExceptionResponse(FxRateExceptionUtil.getMessage(errorCode), exception),
+                new FxRateExceptionResponse(errorCode, FxRateExceptionUtil.getMessage(errorCode), exception),
                 new HttpHeaders(),
                 FxRateExceptionUtil.getHttpStatus(errorCode),
                 request);
